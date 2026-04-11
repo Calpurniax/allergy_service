@@ -8,3 +8,4 @@ def open_gsheet():
 
 def append_row_to_gsheet(row, sheet):
     sheet.append_row(row)
+

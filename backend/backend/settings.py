@@ -119,5 +119,5 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-GSCLIENT = gspread.service_account('credentials.json')
+GSCLIENT = gspread.service_account(str(Path(__file__).parent / 'services' / 'credentials.json'))
 GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'

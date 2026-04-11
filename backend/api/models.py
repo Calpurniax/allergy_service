@@ -1,10 +1,10 @@
 from django.db import models
 
 # Create your models here.
-class user(models.Model):
+class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    birthdate = models.DateField()
+    birthdate = models.CharField()
     # location ={
     #     'latitude': models.FloatField(),
     #     'longitude': models.FloatField(),
