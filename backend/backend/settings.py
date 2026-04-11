@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -119,5 +121,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# credenciales para conectarse a API de google
 GSCLIENT = gspread.service_account(str(Path(__file__).parent / 'services' / 'credentials.json'))
+# ID de la hoja de cálculo para la lista de usuarios
 GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'
+
+# conf de CORS
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
+]

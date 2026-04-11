@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const apiUrl='http://127.0.0.1:8000/api/user/'
 
 const formData = reactive({
   name: '',
@@ -9,10 +10,23 @@ const formData = reactive({
   password: ''
 })
 
-function submitHandler (event: Event) {
+async function submitHandler (event: Event) {
   event.preventDefault()
-  console.log(formData)
+  console.log(formData)  
+  try{
+    const res = await $fetch(apiUrl, {
+    method: 'POST',
+    body: {
+      formData
+    },
+  })
+  }catch(e){
+    console.log(e)
+  }
+  
 }
+
+
 
 </script>
 
