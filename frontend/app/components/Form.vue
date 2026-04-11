@@ -16,9 +16,7 @@ async function submitHandler (event: Event) {
   try{
     const res = await $fetch(apiUrl, {
     method: 'POST',
-    body: {
-      formData
-    },
+    body: JSON.stringify(formData),
   })
   }catch(e){
     console.log(e)
