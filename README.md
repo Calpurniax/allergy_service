@@ -11,3 +11,5 @@ Full stack app for allergy and air quality info
 
 [ ] Allergies as a select/multichoice
 
+[ ] More values for get a specific location (like Country for ex.)
+

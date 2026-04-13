@@ -1,33 +1,40 @@
 from rest_framework import generics
 
+
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import User
 from .serializers import UserSerializer
-from backend.services.gsheet import append_row_to_gsheet
-from backend.services.gsheet import open_gsheet
+from backend.services.gsheet import appendRowToGsheet
+from backend.services.gsheet import openGsheet
+from backend.services.locationAPI import getCoord
 # Create your views here.
 
 class Userview(generics.CreateAPIView):
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
+      
 
         if serializer.is_valid():
-            data = serializer.validated_data
+            data = serializer.validated_data            
+            coordenates = getCoord(data['location'])
             
             row = [
                 data['name'],
                 data['email'],
                 data['birthdate'],
                 data['location'],
+                coordenates.latitude,
+                coordenates.longitude,
                 data['allergies'],
                 data['password']
             ]
+
             try:
-                sheet=open_gsheet()
-                append_row_to_gsheet(row, sheet)
+                sheet=openGsheet()
+                appendRowToGsheet(row, sheet)
             except Exception as e:
                 return Response(
                     {"error":"Error al conectar con Google Sheets: " + str(e)},

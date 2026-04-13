@@ -4,13 +4,10 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    birthdate = models.CharField()
-    # location ={
-    #     'latitude': models.FloatField(),
-    #     'longitude': models.FloatField(),
-    #     'city': models.CharField(max_length=100)
-    # }
+    birthdate = models.CharField()   
     location = models.CharField(max_length=200)
+    latitude =models.FloatField(),
+    longitude = models.FloatField(),
     allergies = models.CharField(max_length=500)
     password = models.CharField(max_length=100)
 
