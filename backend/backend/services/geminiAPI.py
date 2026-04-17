@@ -5,8 +5,6 @@ from rest_framework import status
 
 from .geminiKey import GEMINI_API_KEY
 
-
-
 def geminiContext(user, weatherResponse):
     weatherData = weatherResponse.json()
     
