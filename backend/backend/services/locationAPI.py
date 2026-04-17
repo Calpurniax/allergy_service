@@ -1,4 +1,6 @@
 from geopy.geocoders import Nominatim
+from rest_framework.response import Response
+from rest_framework import status
 
 URL ='https://nominatim.openstreetmap.org/search?format=json&limit=1&q='
 

@@ -13,3 +13,9 @@ Full stack app for allergy and air quality info
 
 [ ] More values for get a specific location (like Country for ex.)
 
+### Backend 
+
+[ ] Add google docs connection (create template, export PDF)
+
+[ ] Create email content with HTML and send the PDF as attachment
+
