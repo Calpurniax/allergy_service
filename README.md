@@ -9,13 +9,17 @@ Full stack app for allergy and air quality info
 
 [ ] Input validation
 
-[ ] Allergies as a select/multichoice
+[x] Allergies as a select/multichoice
 
 [ ] More values for get a specific location (like Country for ex.)
 
 ### Backend 
 
-[ ] Add google docs connection (create template, export PDF)
+[x] Add google docs connection (create template, export PDF)
 
-[ ] Create email content with HTML and send the PDF as attachment
+[x] Create email content with HTML and send the PDF as attachment
+
+[x] Manage allergies 
+
+[ ] Create an ID for the users
 
