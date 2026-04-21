@@ -1,5 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
+import uuid
+from django.contrib.auth.hashers import make_password
 
 from backend.services.locationAPI import getCoord
 from backend.services.gsheet import createUserInGsheet
@@ -10,6 +12,8 @@ from backend.services.emailService import sendEmail
 
 def createRow(data):
     coordenates = getCoord(data['location'])
+    userID = str(uuid.uuid4())[:8]
+    hashedPassword = make_password(data['password'])
     row = [
                 data['name'],
                 data['email'],
@@ -18,7 +22,8 @@ def createRow(data):
                 coordenates.latitude,
                 coordenates.longitude,
                 data['allergies'],
-                data['password']
+                hashedPassword,
+                userID
             ]
     return row  
 
@@ -29,14 +34,13 @@ def newUser(data):
     userLong = row[5]
     userAllergy = row[6]
     weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)        
-    # docForEmail = connectGemini(row, weather)    
-    print(weather)
-    # pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
-    # if error:
-    #      print(f"Error generando PDF: {error}")
-    #      sendEmail(row, '')   
-    #      return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    # sendEmail(row, pdfPath)   
+    docForEmail = connectGemini(row, weather)        
+    pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
+    if error:
+         print(f"Error generando PDF: {error}")
+         sendEmail(row, '')   
+         return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    sendEmail(row, pdfPath)   
 
    
 

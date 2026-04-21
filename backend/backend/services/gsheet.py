@@ -1,5 +1,4 @@
 from django.conf import settings
-from oauth2client.service_account import ServiceAccountCredentials
 from rest_framework.response import Response
 from rest_framework import status
 
