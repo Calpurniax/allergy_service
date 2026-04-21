@@ -14,6 +14,7 @@ from pathlib import Path
 import gspread
 import os
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 # Función simple para cargar .env (sin dependencias externas)
 def load_env_file():
     env_path = BASE_DIR / '.env'
@@ -23,20 +24,17 @@ def load_env_file():
                 line = line.strip()
                 if line and not line.startswith('#'):
                     key, value = line.split('=', 1)
-                    os.environ[key] = value
+                    os.environ[key.strip()] = value.strip()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Cargar variables de entorno desde .env
+
 load_env_file()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hgca3n#ds$+ojkbjvgxp)-hs)@o^+)xpl$@iykw+j+r2ary&w7'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -137,9 +135,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # credenciales para conectarse a API de google
-GSCLIENT = gspread.service_account(str(Path(__file__).parent / 'services' / 'credentials.json'))
+GCREDENTIALS = str(Path(__file__).parent / 'services' / 'credentials.json')
+GSCLIENT = gspread.service_account(GCREDENTIALS)
 # ID de la hoja de cálculo para la lista de usuarios
 GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'
+
 
 # conf de CORS
 CORS_ORIGIN_WHITELIST = [
@@ -148,9 +148,10 @@ CORS_ORIGIN_WHITELIST = [
 
 # Configuración de email usando variables de entorno
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@example.com')
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')

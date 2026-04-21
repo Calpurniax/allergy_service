@@ -5,6 +5,7 @@ from backend.services.locationAPI import getCoord
 from backend.services.gsheet import createUserInGsheet
 from backend.services.weatherAPI import callweatherAPI
 from backend.services.geminiAPI import connectGemini
+from backend.services.gdocs import generatePdfFromTemplate
 from backend.services.emailService import sendEmail
 
 def createRow(data):
@@ -26,10 +27,14 @@ def newUser(data):
     createUserInGsheet(row)      
     userLat = row[4]
     userLong = row[5]
-    weather = callweatherAPI(userLat, userLong)       
-    docForEmail = connectGemini(row, weather)   
-    #create google docs (plantilla y exportar PDF)
-    sendEmail(row, docForEmail)   
+    weather = callweatherAPI(userLat, userLong)         
+    docForEmail = connectGemini(row, weather) 
+    pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])  # row[0] es userName
+    if error:
+        print(f"Error generando PDF: {error}")
+        sendEmail(row, '')   
+        return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    sendEmail(row, pdfPath)   
 
    
 
