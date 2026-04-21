@@ -19,7 +19,7 @@ Full stack app for allergy and air quality info
 
 [x] Create email content with HTML and send the PDF as attachment
 
-[ ] Manage allergies 
+[x] Manage allergies 
 
 [ ] Create an ID for the users
 
