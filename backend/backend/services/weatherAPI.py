@@ -2,12 +2,12 @@ import requests
 from rest_framework.response import Response
 from rest_framework import status
 
-weatherAPI ='https://air-quality-api.open-meteo.com/v1/air-quality?hourly=pm10,pm2_5&'
+weatherAPI ='https://air-quality-api.open-meteo.com/v1/air-quality?'
 
 
-def callweatherAPI (lat, long):
+def callweatherAPI (lat, long, allergy, forecast_days):
     try:
-        url = f"{weatherAPI}latitude={lat}&longitude={long}"           
+        url = f"{weatherAPI}forecast_days={forecast_days}&latitude={lat}&longitude={long}&hourly=pm10,pm2_5,{allergy}"           
         response = requests.get(url)   
         print(url)        
         data =response.json()
