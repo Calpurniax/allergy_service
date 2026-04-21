@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Select from './Select.vue'
+
 const apiUrl='http://127.0.0.1:8000/api/user/'
 
 const formData = reactive({
@@ -36,11 +38,11 @@ async function submitHandler (event: Event) {
     <input type="text" name="birthdate" v-model="formData.birthdate">
     <label for="location">Ciudad de residencia</label>
     <input type="text" name="location" v-model="formData.location">
-    <label for="allergies">Alergias conocidas</label>
-    <input type="text" name="allergies" v-model="formData.allergies">
+    <label for="allergies">Alergia</label>
+    <Select v-model="formData.allergies">  </Select>
     <label for="email">Correo electrónico</label>
-    <input type="text" name="email" v-model="formData.email">
-    <label for="password">Crear contraseña</label>
+    <input type="text" name="email" v-model="formData.email">   
+    <label for="password">Crear contraseña</label>    
     <input type="password" name="password" v-model="formData.password">
     <button class="button" @click="submitHandler">Crear usuario</button>
   </form>
