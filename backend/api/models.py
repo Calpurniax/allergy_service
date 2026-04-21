@@ -8,7 +8,7 @@ class User(models.Model):
     location = models.CharField(max_length=200)
     latitude =models.FloatField(),
     longitude = models.FloatField(),
-    allergies = models.CharField(max_length=500)
+    allergies = models.CharField(blank=True, max_length=500)
     password = models.CharField(max_length=100)
 
     def __str__(self):

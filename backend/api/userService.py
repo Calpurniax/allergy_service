@@ -29,14 +29,14 @@ def newUser(data):
     userLong = row[5]
     userAllergy = row[6]
     weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)        
-    docForEmail = connectGemini(row, weather) 
-    print(docForEmail)
-    pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
-    if error:
-         print(f"Error generando PDF: {error}")
-         sendEmail(row, '')   
-         return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    sendEmail(row, pdfPath)   
+    # docForEmail = connectGemini(row, weather)    
+    print(weather)
+    # pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
+    # if error:
+    #      print(f"Error generando PDF: {error}")
+    #      sendEmail(row, '')   
+    #      return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # sendEmail(row, pdfPath)   
 
    
 

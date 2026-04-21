@@ -16,14 +16,14 @@ def gDocsConnection():
     return build('docs', 'v1', credentials=creds), build('drive', 'v3', credentials=creds)
 
 def generatePdfFromTemplate(text, userName):
-    TEMPLATE_ID = '1dROXapxfbBTldAUe1Rl9D9dudjSr0gGGpOpRmC81PrY'
+    TEMPLATE_ID = settings.DOCS_TEMPLATE_ID
     try:
         docsService, drive_service = gDocsConnection()
 
         # Copiar la plantilla
         copy_body = {
             'name': f'Reporte_{userName}_{Path(__file__).stem}',
-            'parents': ['1Yi1KPECGj-gNMax105ryoEtefDVvHOI9'] #id de mi carpeta en Drive para evitar errores de "espacio no disponible" para service accounts
+            'parents': [settings.GDRIVE_ID] #id de mi carpeta en Drive para evitar errores de "espacio no disponible" para service accounts
         }
         copied_file = drive_service.files().copy(fileId=TEMPLATE_ID, body=copy_body).execute()
         new_document_id = copied_file['id']

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 def openGsheet():
-    sheet = settings.GSCLIENT.open_by_key(settings.GSHEET).sheet1
+    sheet = settings.GSCLIENT.open_by_key(settings.GSHEET_ID).sheet1
     return sheet
 
 def appendRowToGsheet(row, sheet):

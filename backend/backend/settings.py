@@ -138,7 +138,10 @@ STATIC_URL = 'static/'
 GCREDENTIALS = str(Path(__file__).parent / 'services' / 'credentials.json')
 GSCLIENT = gspread.service_account(GCREDENTIALS)
 # ID de la hoja de cálculo para la lista de usuarios
-GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'
+# GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'
+GDRIVE_ID = os.environ.get('GDRIVE_ID')
+GSHEET_ID = os.environ.get('GSHEET_ID')
+DOCS_TEMPLATE_ID=os.environ.get('DOCS_TEMPLATE_ID')
 
 
 # conf de CORS
