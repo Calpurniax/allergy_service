@@ -32,9 +32,6 @@ GSHEET_ID = the google sheet ID for the database
 GDRIVE_ID = The google drive ID for creating the PDF files 
 
 
-EMAIL_HOST=your SMTP
-EMAIL_PORT= your port e-mail
-EMAIL_USE_TLS=True
 EMAIL_HOST_USER= your e-mail
 EMAIL_HOST_PASSWORD=password for your e-mail
 DEFAULT_FROM_EMAIL=your e-mail
