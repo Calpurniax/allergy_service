@@ -31,7 +31,6 @@ DOCS_TEMPLATE_ID = the ID for a template in google docs
 GSHEET_ID = the google sheet ID for the database
 GDRIVE_ID = The google drive ID for creating the PDF files 
 
-
 EMAIL_HOST_USER= your e-mail
 EMAIL_HOST_PASSWORD=password for your e-mail
 DEFAULT_FROM_EMAIL=your e-mail
