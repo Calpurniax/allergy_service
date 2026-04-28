@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 
 from .serializers import UserSerializer
-from .userService import newUser
+from .userService import newUser, createAndSendEmail
 from rest_framework.response import Response
 
 
@@ -23,8 +23,8 @@ class Emailview(generics.CreateAPIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data) 
         if serializer.is_valid():
-            data = serializer.validated_data   
-            print(data)
+            data = serializer.validated_data  
+            createAndSendEmail(data)    
             return Response({"message": "email enviado"}, status=status.HTTP_200_OK)
          
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

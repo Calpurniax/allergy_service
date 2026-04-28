@@ -29,6 +29,7 @@ async function submitHandler (event: Event) {
         method:'POST',
         body: JSON.stringify(formData),
       })
+      console.log(res)
     }catch(e){console.log(e)}
   }
   }catch(e){

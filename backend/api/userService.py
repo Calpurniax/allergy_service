@@ -4,7 +4,7 @@ import uuid
 from django.contrib.auth.hashers import make_password
 
 from backend.services.locationAPI import getCoord
-from backend.services.gsheet import createUserInGsheet
+from backend.services.gsheet import createUserInGsheet, getUserGsheet
 from backend.services.weatherAPI import callweatherAPI
 from backend.services.geminiAPI import connectGemini
 from backend.services.gdocs import generatePdfFromTemplate
@@ -15,6 +15,7 @@ def createRow(data):
     userID = str(uuid.uuid4())[:8]
     hashedPassword = make_password(data['password'])
     row = [
+                
                 data['name'],
                 data['email'],
                 data['birthdate'],
@@ -23,36 +24,29 @@ def createRow(data):
                 coordenates.longitude,
                 data['allergies'],
                 hashedPassword,
-                userID
+                userID,
             ]
     return row  
 
 def newUser(data):
     row = createRow(data)
-    Response = createUserInGsheet(row) 
-    # if Response.status_code == 201:        
-    #     userLat = row[4]
-    #     userLong = row[5]
-    #     userAllergy = row[6]
-    #     weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
-    #     #print(weather)     
-    #     docForEmail = connectGemini(row, weather)        
-    #     pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
-    #     if error:
-    #         print(f"Error generando PDF: {error}")
-    #         sendEmail(row, '')   
-    #         return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    #     sendEmail(row, pdfPath)   
+    createUserInGsheet(row)    
 
-
-
-# async def createAndSendEmail(user):
-#     userLat = user[4]
-#     userLong = user[5]
-#     userAllergy = user[6]
-#     weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7) 
-#     docForEmail = connectGemini(user, weather)   
-#     print('docDone')
+def createAndSendEmail(data):        
+        row = getUserGsheet(data)     
+        
+        # userLat = row[5]
+        # userLong = row[6]
+        # userAllergy = row[7]
+        # weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
+        # #print(weather)     
+        # docForEmail = connectGemini(row, weather)        
+        # pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
+        # if error:
+        #     print(f"Error generando PDF: {error}")
+        #     sendEmail(row, '')   
+        #     return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # sendEmail(row, pdfPath)
 
 
 
