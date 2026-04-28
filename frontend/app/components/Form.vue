@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Select from './Select.vue'
 
-const apiUrl='http://127.0.0.1:8000/api/user/'
+const apiUser='http://127.0.0.1:8000/api/user/'
+const apiEmail ='http://127.0.0.1:8000/api/send-email/'
 
 const formData = reactive({
   name: '',
@@ -14,12 +15,22 @@ const formData = reactive({
 
 async function submitHandler (event: Event) {
   event.preventDefault()
-  console.log(formData)  
+  console.log(formData) 
   try{
-    const res = await $fetch(apiUrl, {
+    const res = await $fetch.raw(apiUser, {
+    ignoreResponseError: true,
     method: 'POST',
-    body: JSON.stringify(formData),
+    body: JSON.stringify(formData) 
   })
+  console.log(res)
+  if(res.status === 201){
+    try{
+      const res = await $fetch(apiEmail,{
+        method:'POST',
+        body: JSON.stringify(formData),
+      })
+    }catch(e){console.log(e)}
+  }
   }catch(e){
     console.log(e)
   }

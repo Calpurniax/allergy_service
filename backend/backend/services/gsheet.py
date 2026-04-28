@@ -15,6 +15,7 @@ def createUserInGsheet(row):
         appendRowToGsheet(row, sheet)
         
     except Exception as e:
+        print("error")
         return Response(
              {"error":"Error al conectar con Google Sheets: " + str(e)},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR

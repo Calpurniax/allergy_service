@@ -19,3 +19,12 @@ class Userview(generics.CreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class Emailview(generics.CreateAPIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data) 
+        if serializer.is_valid():
+            data = serializer.validated_data   
+            print(data)
+            return Response({"message": "email enviado"}, status=status.HTTP_200_OK)
+         
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
