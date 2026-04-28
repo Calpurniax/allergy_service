@@ -13,32 +13,34 @@ const formData = reactive({
   password: ''
 })
 
+const responseOK =ref(false)
+
 async function submitHandler (event: Event) {
+  responseOK.value =false
   event.preventDefault()
   console.log(formData) 
   try{
     const res = await $fetch.raw(apiUser, {
     ignoreResponseError: true,
     method: 'POST',
-    body: JSON.stringify(formData) 
+    body: formData
   })
   console.log(res)
   if(res.status === 201){
+    responseOK.value =true
     try{
       const res = await $fetch(apiEmail,{
         method:'POST',
-        body: JSON.stringify(formData),
+        body: formData,
       })
       console.log(res)
-    }catch(e){console.log(e)}
+    }catch(e){console.error(e)}
   }
   }catch(e){
-    console.log(e)
+    console.error(e)
   }
   
 }
-
-
 
 </script>
 
@@ -56,6 +58,7 @@ async function submitHandler (event: Event) {
     <input type="text" name="email" v-model="formData.email">   
     <label for="password">Crear contraseña</label>    
     <input type="password" name="password" v-model="formData.password">
+    <p v-if="responseOK"> Usuario creado</p>    
     <button class="button" @click="submitHandler">Crear usuario</button>
   </form>
 </template>
