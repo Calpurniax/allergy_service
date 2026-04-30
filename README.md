@@ -21,6 +21,8 @@ Full stack app for allergy and air quality info
 
 [x] Manage allergies 
 
+[ ] Manage allergies with multiple choice
+
 [x] Create an ID for the users
 
 [x] Hash password to save them properly in db
