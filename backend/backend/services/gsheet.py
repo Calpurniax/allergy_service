@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
-import requests
+
 
 def openGsheet():
     sheet = settings.GSCLIENT.open_by_key(settings.GSHEET_ID).sheet1
@@ -30,10 +30,10 @@ def getUserGsheet(data):
     try:    
         sheet = openGsheet()  
         cell = sheet.find(data['email'])        
-        data = sheet.row_values(cell.row)
-        #estaria bien quitar espacios vacios por si hace cosas raras? o mirar que no haga cosas raras :)
-        print(data)
-        return data
+        data = sheet.row_values(cell.row)        
+        filteredData = list(filter(None, data))
+        #añadido filtro porque en ocasiones crea celdas vacias     
+        return filteredData
        
     except Exception as e:
         print("error"+str(e))

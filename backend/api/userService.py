@@ -15,7 +15,7 @@ def createRow(data):
     userID = str(uuid.uuid4())[:8]
     hashedPassword = make_password(data['password'])
     row = [
-                
+                userID,
                 data['name'],
                 data['email'],
                 data['birthdate'],
@@ -23,8 +23,7 @@ def createRow(data):
                 coordenates.latitude,
                 coordenates.longitude,
                 data['allergies'],
-                hashedPassword,
-                userID,
+                hashedPassword,                
             ]
     return row  
 
@@ -33,20 +32,19 @@ def newUser(data):
     createUserInGsheet(row)    
 
 def createAndSendEmail(data):        
-        row = getUserGsheet(data)     
-        
-        # userLat = row[5]
-        # userLong = row[6]
-        # userAllergy = row[7]
-        # weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
-        # #print(weather)     
-        # docForEmail = connectGemini(row, weather)        
-        # pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
-        # if error:
-        #     print(f"Error generando PDF: {error}")
-        #     sendEmail(row, '')   
-        #     return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        # sendEmail(row, pdfPath)
+        row = getUserGsheet(data)    
+        userLat = row[5]
+        userLong = row[6]
+        userAllergy = row[7]
+        weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
+        #print(weather)     
+        docForEmail = connectGemini(row, weather)        
+        pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
+        if error:
+            print(f"Error generando PDF: {error}")
+            sendEmail(row, '')   
+            return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        sendEmail(row, pdfPath)
 
 
 
