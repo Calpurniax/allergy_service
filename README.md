@@ -25,6 +25,8 @@ Full stack app for allergy and air quality info
 
 [x] Hash password to save them properly in db
 
+[x] Create another endpoint to manage faster the response 
+
 ## Enviroment variables for the project
 
 DOCS_TEMPLATE_ID = the ID for a template in google docs
