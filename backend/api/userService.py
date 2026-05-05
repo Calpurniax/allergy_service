@@ -32,19 +32,22 @@ def newUser(data):
     createUserInGsheet(row)    
 
 def createAndSendEmail(data):        
-        row = getUserGsheet(data)    
+        row = getUserGsheet(data) 
+        userName =row[0] 
+        userEmail = row[1]  
+        userCity= row[3]
         userLat = row[5]
         userLong = row[6]
         userAllergy = row[7]
         weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
         #print(weather)     
-        docForEmail = connectGemini(row, weather)        
-        pdfPath, error = generatePdfFromTemplate(docForEmail, row[0])
+        docForEmail = connectGemini(userName, userCity, weather)        
+        pdfPath, error = generatePdfFromTemplate(docForEmail, userName)
         if error:
             print(f"Error generando PDF: {error}")
-            sendEmail(row, '')   
+            sendEmail(userName, userEmail, '')   
             return Response({"error": "Error generando PDF"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        sendEmail(row, pdfPath)
+        sendEmail(userName, userEmail, pdfPath)
 
 
 

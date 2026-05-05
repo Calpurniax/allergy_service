@@ -4,10 +4,7 @@ from django.utils.html import strip_tags
 import os
 
 
-def sendEmail(userData, pdfPath=None):
-    userName = userData[0]
-    userEmail = userData[1]
-
+def sendEmail(userName,userEmail,pdfPath=None): 
     html_content = f"""
     <html>
     <body>

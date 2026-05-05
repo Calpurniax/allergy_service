@@ -5,13 +5,13 @@ from rest_framework import status
 
 from .geminiKey import GEMINI_API_KEY
 
-def geminiContext(user, weatherData): 
+def geminiContext(userName, userCity, weatherData): 
     
     context = {
         "request_type": "health_forecast_email",
         "user_profile": {
-            "first_name": user[0],
-            "city": user[3], 
+            "first_name": userName,
+            "city": userCity, 
             "language": "es"            
         },
         "air_quality_data": {
@@ -22,8 +22,8 @@ def geminiContext(user, weatherData):
     
     return context
 
-def connectGemini(user, weatherResponse):    
-    context = geminiContext(user, weatherResponse) 
+def connectGemini(userName, userCity, weatherResponse):    
+    context = geminiContext(userName, userCity,weatherResponse) 
     userPrompt = json.dumps(context, indent=2)
 
     client = genai.Client(api_key= GEMINI_API_KEY)
