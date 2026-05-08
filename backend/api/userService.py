@@ -9,9 +9,14 @@ from backend.services.weatherAPI import callweatherAPI
 from backend.services.geminiAPI import connectGemini
 from backend.services.gdocs import generatePdfFromTemplate
 from backend.services.emailService import sendEmail
+from math import floor
+
 
 def createRow(data):
-    coordenates = getCoord(data['location'])
+    coordenates = getCoord(data['location'])  
+    #weather API da error si mandas coordenadas con más de 2 decimales  
+    latitude = (floor(coordenates.latitude * 100)/100)
+    longitude = (floor(coordenates.longitude*100)/100)
     userID = str(uuid.uuid4())[:8]
     hashedPassword = make_password(data['password'])
     row = [
@@ -20,8 +25,8 @@ def createRow(data):
                 data['email'],
                 data['birthdate'],
                 data['location'],
-                coordenates.latitude,
-                coordenates.longitude,
+                latitude,
+                longitude,
                 data['allergies'],
                 hashedPassword,                
             ]
@@ -39,8 +44,7 @@ def createAndSendEmail(data):
         userLat = row[5]
         userLong = row[6]
         userAllergy = row[7]
-        weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)   
-        #print(weather)     
+        weather = callweatherAPI(userLat, userLong, userAllergy, forecast_days=7)    
         docForEmail = connectGemini(userName, userCity, weather)        
         pdfPath, error = generatePdfFromTemplate(docForEmail, userName)
         if error:

@@ -137,17 +137,19 @@ STATIC_URL = 'static/'
 # credenciales para conectarse a API de google
 GCREDENTIALS = str(Path(__file__).parent / 'services' / 'credentials.json')
 GSCLIENT = gspread.service_account(GCREDENTIALS)
-# ID de la hoja de cálculo para la lista de usuarios
-# GSHEET = '1Mzcu_cUju9yOnK4d8OFsrQ5tsguvTRJMqq4HWZHfbpQ'
+# ID del drive, la hoja de cálculo para la lista de usuarios y el documento de plantilla
 GDRIVE_ID = os.environ.get('GDRIVE_ID')
 GSHEET_ID = os.environ.get('GSHEET_ID')
 DOCS_TEMPLATE_ID=os.environ.get('DOCS_TEMPLATE_ID')
 
 
 # conf de CORS
+FRONTEND_DEV_URL = os.environ.get('FRONTEND_DEV_URL', 'http://localhost:3000')
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
+    FRONTEND_DEV_URL
 ]
+#URL para las API de clima
+WEATHER_API_URL = os.environ.get('WEATHER_API_URL')
 
 # Configuración de email usando variables de entorno
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

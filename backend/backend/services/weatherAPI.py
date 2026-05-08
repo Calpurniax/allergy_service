@@ -1,9 +1,9 @@
 import requests
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
 
-weatherAPI ='https://air-quality-api.open-meteo.com/v1/air-quality?'
-
+weatherAPI = settings.WEATHER_API_URL
 
 def callweatherAPI (lat, long, allergy, forecast_days):
     try:
